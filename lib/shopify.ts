@@ -14,17 +14,16 @@ export async function shopifyFetch<T>({ query, variables, cache = "force-cache",
   const storeDomain = process.env.SHOPIFY_STORE_DOMAIN
   const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN
 
-  if (!storeDomain || !accessToken) {
-    throw new Error("Missing Shopify environment variables")
-  }
-
-  const endpoint = `https://${storeDomain}/api/${API_VERSION}/graphql.json`
+  const useMockShop = !storeDomain || !accessToken
+  const endpoint = useMockShop
+    ? "https://mock.shop/api"
+    : `https://${storeDomain}/api/${API_VERSION}/graphql.json`
 
   const res = await fetch(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": accessToken,
+      ...(accessToken ? { "X-Shopify-Storefront-Access-Token": accessToken } : {}),
     },
     body: JSON.stringify({ query, variables }),
     cache,
