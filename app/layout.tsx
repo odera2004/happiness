@@ -18,10 +18,10 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'AMBER — Natural Skincare',
-  description: 'Discover skincare that breathes with you. Pure ingredients, gentle rituals, radiant results with AMBER.',
+  title: 'House of Happiness',
+  description: 'Book your events with us.',
   generator: 'v0.app',
-  keywords: ['skincare', 'natural', 'organic', 'beauty', 'body care', 'cruelty-free'],
+  keywords: ['Deco', 'style', 'organic', 'beauty', 'events', 'cruelty-free'],
   icons: {
     icon: [
       {
@@ -51,8 +51,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body 
+        className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <CartProvider>
           {children}
         </CartProvider>

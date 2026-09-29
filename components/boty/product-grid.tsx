@@ -1,223 +1,144 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import type { Product } from "@/lib/shopify"
+import { ArrowUpRight } from "lucide-react"
 
-type Category = "cream" | "oil" | "serum"
-
-const categories = [
-  { value: "cream" as Category, label: "Cream" },
-  { value: "oil" as Category, label: "Oil" },
-  { value: "serum" as Category, label: "Serum" }
+const merchItems = [
+  {
+    id: "packaged-orders",
+    name: "House Merch Pack",
+    price: "$50",
+    description: "Custom packaged apparel ready for delivery and dispatch.",
+    image: "https://res.cloudinary.com/do0mtxjce/image/upload/v1790697703/WhatsApp_Image_2026-09-29_at_18.53.07_dfdz7w.jpg",
+    badge: "Bestseller"
+  },
+  {
+    id: "flower-box-luxury",
+    name: "Luxury Rose Box",
+    price: "$85",
+    description: "Premium preserved roses arranged in a signature box.",
+    image: "https://res.cloudinary.com/do0mtxjce/image/upload/v1790697699/WhatsApp_Image_2026-09-29_at_18.53.03_k4uaan.jpg",
+    badge: "Popular"
+  },
+  {
+    id: "apparel-hoodie",
+    name: "Signature Brand Hoodie",
+    price: "$60",
+    description: "Heavyweight organic cotton hoodie with custom embroidered logo.",
+    image: "https://res.cloudinary.com/do0mtxjce/image/upload/v1790697708/WhatsApp_Image_2026-09-29_at_18.53.04_xxhz7w.jpg",
+    badge: "New"
+  },
+  {
+    id: "full-apparel wear",
+    name: "full-set",
+    price: "$35",
+    description: "Hand-poured soy wax candles to elevate any venue setup.",
+    image: "https://res.cloudinary.com/do0mtxjce/image/upload/v1790594634/WhatsApp_Image_2026-09-27_at_19.09.38_phj5xj.jpg",
+    badge: null
+  },
+  {
+    id: "custom-tote",
+    name: "custom made set",
+    price: "$25",
+    description: "Durable canvas tote bag for your everyday essentials.",
+    image: "https://res.cloudinary.com/do0mtxjce/image/upload/v1790697694/WhatsApp_Image_2026-09-29_at_18.53.02_lalhd8.jpg",
+    badge: "Classic"
+  }
 ]
 
-export function ProductGrid({ products }: { products: Product[] }) {
-  const [selectedCategory, setSelectedCategory] = useState<Category>("cream")
-  const [isVisible, setIsVisible] = useState(false)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [headerVisible, setHeaderVisible] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const gridRef = useRef<HTMLDivElement>(null)
-  const headerRef = useRef<HTMLDivElement>(null)
-  const sectionRef = useRef<HTMLDivElement>(null)
-  
-  const filteredProducts = products.filter(product => product.category === selectedCategory)
+export function ProductGrid() {
+  // Phone number for WhatsApp orders (enter without '+' or spaces)
+  const whatsappNumber = "0740764113"
 
-  const handleCategoryChange = (category: Category) => {
-    if (category !== selectedCategory) {
-      setIsTransitioning(true)
-      setTimeout(() => {
-        setSelectedCategory(category)
-        setTimeout(() => {
-          setIsTransitioning(false)
-        }, 50)
-      }, 300)
-    }
+  const getWhatsAppLink = (itemName: string, price: string) => {
+    const text = `Hello House of Happiness! I would like to order/inquire about: *${itemName}* (${price}).`
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`
   }
 
-  // Preload all product images on mount
-  useEffect(() => {
-    products.forEach((product) => {
-      const img = new window.Image()
-      img.src = product.image
-    })
-  }, [])
-
-  // Scrollytelling effect
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return
-      
-      const section = sectionRef.current
-      const rect = section.getBoundingClientRect()
-      const sectionTop = rect.top
-      const windowHeight = window.innerHeight
-      
-      // Only start when section is fully in viewport
-      if (sectionTop > 0) {
-        setScrollProgress(0)
-        return
-      }
-      
-      // Calculate progress based on how far section has scrolled
-      const scrollDistance = Math.abs(sectionTop)
-      const maxScrollDistance = rect.height - windowHeight
-      const progress = scrollDistance / maxScrollDistance
-      
-      // Clamp between 0 and 1
-      const clampedProgress = Math.max(0, Math.min(1, progress))
-      setScrollProgress(clampedProgress)
-    }
-    
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Initial call
-    
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const gridObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    const headerObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeaderVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (gridRef.current) {
-      gridObserver.observe(gridRef.current)
-    }
-
-    if (headerRef.current) {
-      headerObserver.observe(headerRef.current)
-    }
-
-    return () => {
-      if (gridRef.current) {
-        gridObserver.unobserve(gridRef.current)
-      }
-      if (headerRef.current) {
-        headerObserver.unobserve(headerRef.current)
-      }
-    }
-  }, [])
-
-  // Calculate transform based on scroll progress
-  const cardWidth = 320 // Card width
-  const gap = 24 // Gap between cards
-  const totalWidth = (cardWidth + gap) * filteredProducts.length - gap
-  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
-  const maxScroll = Math.max(0, totalWidth - viewportWidth + 100) // +100 for padding
-  const horizontalOffset = scrollProgress * maxScroll
-  
   return (
-    <section ref={sectionRef} className="py-24 bg-card min-h-[250vh]">
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <div className="w-full px-6 lg:px-8">
-        {/* Header */}
-        <div ref={headerRef} className="mb-16 ml-8">
-          <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.2s', animationFillMode: 'forwards' } : {}}>
-            Our Collection
+    <section id="merch" className="pt-28 pb-24 bg-card border-t border-border/50 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
+        {/* Section Header */}
+        <div className="max-w-2xl">
+          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-primary mb-3 block">
+            OFFICIAL MERCH &amp; GIFTS
           </span>
-          <h2 className={`font-serif leading-tight text-foreground mb-4 text-balance text-7xl ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.4s', animationFillMode: 'forwards' } : {}}>
-            Gentle essentials
+          <h2 className="font-serif text-4xl md:text-6xl text-foreground font-medium mb-4">
+            House Essentials
           </h2>
-          <p className={`text-lg text-muted-foreground max-w-md ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.6s', animationFillMode: 'forwards' } : {}}>
-            Thoughtfully crafted products for your daily skincare ritual
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Explore our signature collection of merch, custom packaged gifts, and event essentials.
           </p>
         </div>
+      </div>
 
-        {/* Segmented Control */}
-        <div className="flex justify-center mb-12">
-          
-        </div>
-
-        {/* Product Grid - Horizontal */}
-        <div 
-          ref={gridRef}
-          className="flex gap-6 pl-8"
-          style={{ transform: `translateX(-${horizontalOffset}px)`, transition: 'transform 0.1s linear' }}
-        >
-          {filteredProducts.map((product, index) => (
-            <Link
-              key={`${selectedCategory}-${product.id}`}
-              href={`/product/${product.id}`}
-              className={`group transition-all duration-500 ease-out flex-shrink-0 ${
-                isVisible && !isTransitioning ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-              }`}
-              style={{ 
-                transitionDelay: isTransitioning ? '0ms' : `${index * 80}ms`,
-                width: '320px',
-                height: '450px'
-              }}
+      {/* Infinite Horizontal Carousel Container */}
+      <div className="relative w-full overflow-hidden group">
+        {/* Carousel Inner Track */}
+        <div className="flex gap-6 animate-marquee w-max group-hover:[animation-play-state:paused]">
+          {/* Duplicate loop array to achieve seamless infinite looping */}
+          {[...merchItems, ...merchItems].map((item, index) => (
+            <div
+              key={`${item.id}-${index}`}
+              className="w-[300px] sm:w-[340px] flex-shrink-0 bg-background rounded-3xl overflow-hidden border border-border hover:border-primary/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
-              <div className="relative bg-background rounded-3xl overflow-hidden boty-shadow boty-transition group-hover:scale-[1.02] h-full w-full">
-                {/* Image - Full Height */}
-                <div className="relative h-full bg-muted overflow-hidden">
-                  <Image
-                    src={product.image || "/placeholder.svg"}
-                    alt={product.name}
-                    fill
-                    className="object-cover boty-transition group-hover:scale-105"
+              <div>
+                {/* Image Container */}
+                <div className="relative h-72 w-full overflow-hidden bg-muted">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   />
-                  {/* Badge */}
-                  {product.badge && (
-                    <span
-                      className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs tracking-wide bg-white text-black ${
-                        product.badge === "Sale"
-                          ? "bg-destructive/10 text-destructive"
-                          : product.badge === "New"
-                          ? "bg-primary/10 text-primary"
-                          : "bg-accent text-accent-foreground"
-                      }`}
-                    >
-                      {product.badge}
+                  {item.badge && (
+                    <span className="absolute top-4 left-4 bg-background/90 backdrop-blur-md text-foreground font-semibold text-xs px-3 py-1 rounded-full border border-border shadow-sm">
+                      {item.badge}
                     </span>
                   )}
-                  
-                  {/* Info with Progressive Blur */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    {/* Progressive blur overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent backdrop-blur-[6px]" style={{ maskImage: 'linear-gradient(to top, black 0%, black 50%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 0%, black 50%, transparent 100%)' }}></div>
-                    
-                    {/* Content */}
-                    <div className="relative z-10">
-                      <h3 className="font-serif text-lg text-white mb-1">{product.name}</h3>
-                      <p className="text-sm text-white/80 mb-3">{product.description}</p>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-white">${product.price}</span>
-                        {product.originalPrice && (
-                          <span className="text-sm text-white/60 line-through">
-                            ${product.originalPrice}
-                          </span>
-                        )}
-                      </div>
-                    </div>
+                </div>
+
+                {/* Card Info */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-serif text-xl font-semibold text-foreground">
+                      {item.name}
+                    </h3>
+                    <span className="font-serif font-bold text-lg text-primary">
+                      {item.price}
+                    </span>
                   </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                    {item.description}
+                  </p>
                 </div>
               </div>
-            </Link>
+
+              {/* Order on WhatsApp */}
+              <div className="p-6 pt-0">
+                <a
+                  href={getWhatsAppLink(item.name, item.price)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs tracking-wider uppercase py-3.5 px-4 rounded-2xl transition-all duration-300 shadow-sm hover:shadow-md"
+                >
+                  Order on WhatsApp
+                  <ArrowUpRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
           ))}
         </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          
-        </div>
-        </div>
       </div>
+
+      {/* Tailwind Animation Helper in CSS / Tailwind config */}
+      <style jsx global>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 35s linear infinite;
+        }
+      `}</style>
     </section>
   )
 }

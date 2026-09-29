@@ -6,83 +6,87 @@ import { Star } from "lucide-react"
 const testimonials = [
   {
     id: 1,
-    name: "Sarah M.",
-    location: "New York",
+    name: "Sarah & David M.",
+    location: "Nairobi",
     rating: 5,
-    text: "My skin has never felt so soft and nourished. The Radiance Serum is now a permanent part of my morning routine.",
-    product: "Radiance Serum"
+    text: "House of Happiness brought our wedding vision to life! The floral arch and table setups were pure perfection.",
+    service: "Wedding Decor"
   },
   {
     id: 2,
     name: "Emma L.",
-    location: "Los Angeles",
+    location: "Karen",
     rating: 5,
-    text: "Finally, skincare that actually feels natural. No more harsh chemicals. My sensitive skin loves AMBER products.",
-    product: "Gentle Cleanser"
+    text: "The baby shower setup was enchanting! Whimsical, detailed, and completely stress-free for us.",
+    service: "Baby Shower"
   },
   {
     id: 3,
     name: "Jessica R.",
-    location: "Chicago",
+    location: "Runda",
     rating: 5,
-    text: "The Hydra Cream is absolutely divine. It absorbs beautifully and keeps my skin hydrated all day long.",
-    product: "Hydra Cream"
+    text: "My 30th birthday decor was breathtaking! The balloon arch and luxury lighting made the entire night magical.",
+    service: "Birthday Extravaganza"
   },
   {
     id: 4,
     name: "Maria K.",
-    location: "Miami",
+    location: "Kilimani",
     rating: 5,
-    text: "I've tried countless serums but nothing compares to the glow I get from AMBER. Absolutely transformative.",
-    product: "Glow Serum"
+    text: "Every detail was styled with love. They turned an ordinary space into an unforgettable party atmosphere.",
+    service: "Private Celebration"
   },
   {
     id: 5,
     name: "Sophie T.",
-    location: "Seattle",
+    location: "Gigiri",
     rating: 5,
-    text: "The packaging is beautiful and sustainable. I feel good knowing I'm choosing eco-friendly skincare.",
-    product: "Night Cream"
+    text: "Professional, creative, and passionate team. Our guests are still raving about the event styling weeks later!",
+    service: "Corporate Gala"
   },
   {
     id: 6,
     name: "Anna P.",
-    location: "Boston",
+    location: "Lavington",
     rating: 5,
-    text: "My acne-prone skin has cleared up since switching to AMBER. Natural ingredients really make a difference.",
-    product: "Gentle Cleanser"
+    text: "Bespoke styling at its best. They listened to every request and delivered beyond our expectations.",
+    service: "Bridal Shower"
   },
   {
     id: 7,
     name: "Claire B.",
-    location: "Austin",
+    location: "Westlands",
     rating: 5,
-    text: "The texture of the Renewal Oil is perfection. It absorbs quickly and leaves my skin glowing.",
-    product: "Renewal Oil"
+    text: "The attention to detail in their floral arrangements and decor elements is truly unmatched.",
+    service: "Wedding Decor"
   },
   {
     id: 8,
     name: "Lily W.",
-    location: "Portland",
+    location: "Muthaiga",
     rating: 5,
-    text: "I love that AMBER is cruelty-free and vegan. Great products that align with my values.",
-    product: "Hydra Cream"
+    text: "From start to finish, the House of Happiness team treated our celebration with so much care and happiness.",
+    service: "Anniversary Party"
   },
   {
     id: 9,
     name: "Rachel D.",
-    location: "Denver",
+    location: "Kitisuru",
     rating: 5,
-    text: "The scent is so subtle and natural. No overpowering fragrances, just pure botanical goodness.",
-    product: "Radiance Serum"
+    text: "An incredible experience working with them. They truly create magic for every single occasion!",
+    service: "Milestone Birthday"
   }
 ]
 
 const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] }) => (
-  <div className="rounded-3xl p-6 mb-4 flex-shrink-0">
+  <div className="rounded-3xl p-6 mb-4 flex-shrink-0 bg-card border border-border/50 shadow-sm">
 
     {/* Stars */}
-    
+    <div className="flex gap-1 mb-3 text-amber-400">
+      {[...Array(testimonial.rating)].map((_, i) => (
+        <Star key={i} className="w-4 h-4 fill-current" />
+      ))}
+    </div>
 
     {/* Quote */}
     <p className="text-foreground/80 leading-relaxed mb-4 text-pretty font-medium text-xl font-serif tracking-wide">
@@ -95,8 +99,8 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] 
         <p className="text-foreground text-sm font-bold">{testimonial.name}</p>
         <p className="text-xs text-muted-foreground">{testimonial.location}</p>
       </div>
-      <span className="text-xs tracking-wide text-primary/70 bg-primary/5 px-2 py-1 rounded-full whitespace-nowrap">
-        {testimonial.product}
+      <span className="text-xs tracking-wide text-primary/80 bg-primary/10 px-3 py-1 rounded-full whitespace-nowrap font-medium">
+        {testimonial.service}
       </span>
     </div>
   </div>
@@ -105,10 +109,6 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] 
 export function Testimonials() {
   const [headerVisible, setHeaderVisible] = useState(false)
   const headerRef = useRef<HTMLDivElement>(null)
-  
-  const column1 = [testimonials[0], testimonials[3], testimonials[6]]
-  const column2 = [testimonials[1], testimonials[4], testimonials[7]]
-  const column3 = [testimonials[2], testimonials[5], testimonials[8]]
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -137,10 +137,10 @@ export function Testimonials() {
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
           <span className={`text-sm tracking-[0.3em] uppercase text-primary mb-4 block ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.2s', animationFillMode: 'forwards' } : {}}>
-            Kind Words
+            KIND WORDS
           </span>
           <h2 className={`font-serif text-4xl leading-tight text-foreground text-balance md:text-7xl ${headerVisible ? 'animate-blur-in opacity-0' : 'opacity-0'}`} style={headerVisible ? { animationDelay: '0.4s', animationFillMode: 'forwards' } : {}}>
-            Loved by thousands
+            Loved by Our Clients
           </h2>
         </div>
 

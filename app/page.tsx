@@ -3,7 +3,7 @@ import { Hero } from "@/components/boty/hero"
 import { TrustBadges } from "@/components/boty/trust-badges"
 import { FeatureSection } from "@/components/boty/feature-section"
 import { ProductGrid } from "@/components/boty/product-grid"
-import { IngredientsSection } from "@/components/boty/ingredients-section"
+import { IngredientsSection, MerchSection } from "@/components/boty/ingredients-section"
 import { ImpactSection } from "@/components/boty/impact-section"
 import { Testimonials } from "@/components/boty/testimonials"
 import { CTABanner } from "@/components/boty/cta-banner"
@@ -29,7 +29,7 @@ export default async function HomePage() {
         <ImpactSection />
       </div>
       <div id="ingredients">
-        <IngredientsSection />
+        <MerchSection />
       </div>
       <div id="reviews">
         <Testimonials />

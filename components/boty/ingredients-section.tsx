@@ -1,49 +1,32 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
-import { Droplets, Sparkles, Sun, Wind } from "lucide-react"
+import { PackageCheck, Truck, ShieldCheck, HeartHandshake } from "lucide-react"
 
-const ingredients = [
+const highlights = [
   {
-    icon: Droplets,
-    name: "Hyaluronic Acid",
-    benefit: "Deep hydration",
-    description: "Naturally derived moisture magnet that holds up to 1000x its weight in water"
+    icon: PackageCheck,
+    title: "Premium Packaging",
+    description: "Every item is carefully packed and sealed in our signature House of Happiness wrapping."
   },
   {
-    icon: Sparkles,
-    name: "Vitamin C",
-    benefit: "Brightening power",
-    description: "Plant-based antioxidant that evens tone and boosts radiance"
+    icon: Truck,
+    title: "Nationwide Delivery",
+    description: "Fast, reliable shipping directly to your doorstep for all apparel and merchandise."
   },
   {
-    icon: Sun,
-    name: "Rosehip Oil",
-    benefit: "Skin renewal",
-    description: "Cold-pressed botanical rich in essential fatty acids and vitamins"
+    icon: ShieldCheck,
+    title: "Quality Guaranteed",
+    description: "Bespoke fabrics and durable prints crafted to stay fresh wear after wear."
   },
   {
-    icon: Wind,
-    name: "Aloe Vera",
-    benefit: "Soothing comfort",
-    description: "Pure gel from organic plants that calms and repairs"
-  },
-  {
-    icon: Sparkles,
-    name: "Niacinamide",
-    benefit: "Pore refining",
-    description: "Vitamin B3 that minimizes pores and improves skin texture naturally"
-  },
-  {
-    icon: Droplets,
-    name: "Squalane",
-    benefit: "Moisture lock",
-    description: "Plant-derived emollient that mimics skin's natural oils perfectly"
+    icon: HeartHandshake,
+    title: "Made with Love",
+    description: "Designed with passion to bring the House of Happiness spirit everywhere you go."
   }
 ]
 
-export function IngredientsSection() {
+export function MerchSection() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
 
@@ -83,19 +66,18 @@ export function IngredientsSection() {
   const opacity = Math.min(1, (scrollProgress || 0) + 0.3)
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-[200vh]">
+    <section ref={sectionRef} className="relative w-full min-h-[180vh] bg-background">
       {/* Sticky Container */}
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* Full Viewport Image */}
         <div className="absolute inset-0">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%E2%80%99e%CC%81cran%202026-02-18%20a%CC%80%2022.07.09-q9kO0WFDqpgiOD65jiBVuV81LcYmh4.jpg"
-            alt="Natural ingredients"
-            fill
-            className="object-cover"
+          <img
+            src="https://res.cloudinary.com/do0mtxjce/image/upload/v1790592034/WhatsApp_Image_2026-09-27_at_18.56.41_xanbe6.jpg" // replace with your image URL or local path
+            alt="House of Happiness Merchandise Packages"
+            className="w-full h-full object-cover"
           />
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/55 backdrop-blur-[2px]" />
         </div>
 
         {/* Centered Text Overlay with Scroll-Based Blur */}
@@ -107,18 +89,31 @@ export function IngredientsSection() {
               opacity: opacity
             }}
           >
-            <span className="text-sm tracking-[0.3em] uppercase text-white/90 mb-4 block">
-              Pure Ingredients
+            <span className="text-sm tracking-[0.3em] uppercase text-[#e6e2dd] mb-4 block font-semibold">
+              HOUSE OF HAPPINESS MERCH &amp; APPAREL
             </span>
             <h2 className="font-serif text-5xl leading-tight text-white mb-6 text-balance md:text-8xl">
-              Nature's finest,
+              Packed with care,
               <br />
-              for your skin.
+              delivered with joy.
             </h2>
-            <p className="text-lg text-white/80 leading-relaxed max-w-2xl mx-auto">
-              Every ingredient is carefully selected from sustainable sources around the world. 
-              We only use what your skin truly needs — nothing more, nothing less.
+            <p className="text-lg text-stone-200 leading-relaxed max-w-2xl mx-auto font-medium mb-8">
+              Explore our exclusive branded merch collection. From cozy custom apparel to signature gifts, each order is individually sealed and prepared for dispatch.
             </p>
+
+            {/* Packaging Highlights */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left max-w-5xl mx-auto pt-4">
+              {highlights.map((item) => (
+                <div 
+                  key={item.title} 
+                  className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-white shadow-lg"
+                >
+                  <item.icon className="w-6 h-6 text-[#eab308] mb-2" />
+                  <h3 className="font-semibold text-base text-white mb-1">{item.title}</h3>
+                  <p className="text-xs text-stone-300 leading-relaxed">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
