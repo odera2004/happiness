@@ -30,7 +30,7 @@ const socialLinks = [
     name: "Pinterest",
     handle: "@houseofhappiness",
     icon: Pin,
-    url: "https://pinterest.com",
+    url: "https://pin.it/5QQJuCs78",
     description: "Curated mood boards, theme ideas, and romantic styling inspiration."
   }
 ]

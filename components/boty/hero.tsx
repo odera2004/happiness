@@ -22,8 +22,8 @@ export function Hero() {
       {/* Bottom fade gradient */}
       <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-background via-background/60 to-transparent z-[5]" />
 
-      {/* Centered Content */}
-      <div className="relative z-10 w-full px-6 lg:px-8 pt-28 pb-16 md:py-20 flex justify-center items-center">
+      {/* Centered Content with Desktop Navbar Spacing */}
+      <div className="relative z-10 w-full px-6 lg:px-8 pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-16 md:pb-24 flex justify-center items-center">
         <div className="max-w-4xl mx-auto text-center">
           
           <span 
