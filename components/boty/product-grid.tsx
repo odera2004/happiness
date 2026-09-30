@@ -47,7 +47,7 @@ const merchItems = [
 
 export function ProductGrid() {
   // Phone number for WhatsApp orders (enter without '+' or spaces)
-  const whatsappNumber = "0740764113"
+  const whatsappNumber ="+254740764113"
 
   const getWhatsAppLink = (itemName: string, price: string) => {
     const text = `Hello House of Happiness! I would like to order/inquire about: *${itemName}* (${price}).`

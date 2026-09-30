@@ -47,7 +47,7 @@ export function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/house_of_happiness_events_co/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary transition-all duration-300 shadow-sm"
@@ -56,7 +56,7 @@ export function Footer() {
                 <Instagram className="w-4 h-4" />
               </a>
               <a
-                href="https://tiktok.com"
+                href="https://www.tiktok.com/@oyollah_?_r=1&_t=ZS-9AAYfhQjhcS"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary transition-all duration-300 shadow-sm"

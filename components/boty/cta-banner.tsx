@@ -8,7 +8,7 @@ export function CTABanner() {
   const bannerRef = useRef<HTMLDivElement>(null)
 
   // Replace with your actual WhatsApp phone number (with country code, no + or spaces)
-  const whatsappNumber = "0740764113" 
+  const whatsappNumber = "+254740764113" 
   const whatsappMessage = encodeURIComponent("Hello House of Happiness! I would like to book/inquire about an event setup.")
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 

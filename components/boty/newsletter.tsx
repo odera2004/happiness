@@ -16,7 +16,7 @@ const socialLinks = [
     name: "TikTok",
     handle: "@houseofhappiness",
     icon: Video,
-    url: "https://tiktok.com",
+    url: "https://www.tiktok.com/@oyollah_?_r=1&_t=ZS-9AAYfhQjhcS",
     description: "Trending event setups, flower box reveals, and quick decor tips."
   },
   {
